@@ -5,7 +5,7 @@
 - 5. Move Tetrominoes @done
     - move left, right, and down @done
     - move within the boundaries of the grid @done
-- 6. Rotate Tetrominoes
+- 6. Rotate Tetrominoes @done
 - 7. Checking for collisions
     - add velocity by move down continously
     - lock_tetromino() on reaching the bottom

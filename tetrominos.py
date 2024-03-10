@@ -31,6 +31,8 @@ class Tetromino:
             self.move_right()
         if command == Command.DOWN:
             self.move_down()
+        if command == Command.UP:
+            self.rotate()
 
     def move_left(self):
         self.col_offset -= 1
@@ -60,6 +62,11 @@ class Tetromino:
                     ):
                         return True
         return False
+    
+    def rotate(self):
+        self.state = (self.state + 1) % len(self.blocks)
+        if(self.out_of_bounds()):
+            self.state = (self.state - 1 ) % len(self.blocks)
 
 
 

@@ -39,7 +39,7 @@ class Game:
                     if event.key == pygame.K_DOWN:
                         command = Command.DOWN
                     if event.key == pygame.K_UP:
-                        print("up")
+                        command = Command.UP
 
             self.update(command)
             self.draw()
