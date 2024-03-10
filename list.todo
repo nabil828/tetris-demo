@@ -1,0 +1,21 @@
+- 1. Install Pygame @done
+- 2. Setup the Game Loop @done
+- 3. Creating the Grid 
+- 4. Create Tetrominoes
+- 5. Move Tetrominoes 
+    - move left, right, and down
+    - move within the boundaries of the grid
+- 6. Rotate Tetrominoes
+- 7. Checking for collisions
+    - add velocity by move down continously
+    - lock_tetromino() on reaching the bottom
+    - check for collision with other Tetrominoes. lock if collision, only on moving down.
+- 8. Check for completed rows
+    - every time a Tetromino is Locked, check for completed rows
+        - if a row is completed, remove the row and move all rows above down by 1
+- 9. Game over
+    - If the next Tetromino does not fit it's starting position, game over
+- 10. Create User Interface
+- 11. Add Score
+    Score increases based on cleared lines (1: +100, 2: +300, 3: +500) and ongoing points per move down.
+- 12. Add Next Block
