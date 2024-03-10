@@ -26,22 +26,28 @@ class Tetromino:
     
     def update(self, command: Command, game):
         if command == Command.LEFT:
-            self.move_left()
+            self.move_left(game)
         if command == Command.RIGHT:
-            self.move_right()
+            self.move_right(game)
         if command == Command.DOWN:
             self.move_down(game)
         if command == Command.UP:
             self.rotate()
 
-    def move_left(self):
+    def move_left(self, game):
         self.col_offset -= 1
         if(self.out_of_bounds()):
             self.col_offset += 1
+        
+        if (self.collides_with_other_tetrominos(game)):
+            self.col_offset += 1
 
-    def move_right(self):
+    def move_right(self, game):
         self.col_offset += 1
         if(self.out_of_bounds()):
+            self.col_offset -= 1
+
+        if (self.collides_with_other_tetrominos(game)):
             self.col_offset -= 1
 
     def move_down(self, game):
@@ -50,6 +56,14 @@ class Tetromino:
             self.row_offset -= 1
             self.lock_tetromino(game)
             game.spawn_new_tetromino()
+            return
+        
+        if (self.collides_with_other_tetrominos(game)):
+            self.row_offset -= 1
+            self.lock_tetromino(game)
+            game.spawn_new_tetromino()
+            return
+
 
     
 
@@ -78,6 +92,15 @@ class Tetromino:
             for col_index, block in enumerate(row):
                 if block:
                     game.grid.blocks[row_index + self.row_offset][col_index + self.col_offset] = self.color
+    
+    def collides_with_other_tetrominos(self, game):
+        for row_index, row in enumerate(self.blocks[self.state]):
+            for col_index, block in enumerate(row):
+                if block:
+                    if row_index + self.row_offset <= 19:
+                        if game.grid.blocks[row_index + self.row_offset][col_index + self.col_offset]:
+                            return True
+        return False
 
 
 

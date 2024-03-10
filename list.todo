@@ -6,10 +6,10 @@
     - move left, right, and down @done
     - move within the boundaries of the grid @done
 - 6. Rotate Tetrominoes @done
-- 7. Checking for collisions
+- 7. Checking for collisions @done
     - add velocity by move down continously @done
     - lock_tetromino() on reaching the bottom @done
-    - check for collision with other Tetrominoes. lock if collision, only on moving down.
+    - check for collision with other Tetrominoes. lock if collision, only on moving down. @done
 - 8. Check for completed rows
     - every time a Tetromino is Locked, check for completed rows
         - if a row is completed, remove the row and move all rows above down by 1
