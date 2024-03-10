@@ -34,3 +34,4 @@ class Grid:
                 pygame.draw.rect(
                     screen, block, (col_index * 30, row_index * 30, 30-1, 30-1)
                 )
+                

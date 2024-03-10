@@ -1,5 +1,6 @@
 import pygame
 from grid import Grid
+from tetrominos import ITetromino, OTetromino, ZTetromino, TTetromino, STetromino, JTetromino, LTetromino
 
 class Game:
     def __init__(self) -> None:
@@ -10,7 +11,7 @@ class Game:
 
         # game object
         self.grid = Grid()
-        # tetro object
+        self.tetromino = TTetromino()  
         # ui object
 
     def run(self):
@@ -33,3 +34,4 @@ class Game:
 
     def draw(self):
         self.grid.draw(self.screen)
+        self.tetromino.draw(self.screen)
