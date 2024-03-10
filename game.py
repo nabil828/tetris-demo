@@ -19,6 +19,7 @@ class Game:
         self.screen = pygame.display.set_mode(
             (300, 600)
         )  # set the screen size to 300x600 . 20rowsx10columns grid. Each cell is 30x30 pixels
+        self.game_over = False
 
         # game object
         self.grid = Grid()
@@ -37,15 +38,17 @@ class Game:
                     pygame.quit()
                     exit()
                 elif event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT:
+                    if event.key == pygame.K_SPACE and self.game_over == True:
+                        self.__init__()
+                    if event.key == pygame.K_LEFT and self.game_over == False:
                         command = Command.LEFT
-                    if event.key == pygame.K_RIGHT:
+                    if event.key == pygame.K_RIGHT and self.game_over == False:
                         command = Command.RIGHT
-                    if event.key == pygame.K_DOWN:
+                    if event.key == pygame.K_DOWN and self.game_over == False:
                         command = Command.DOWN
-                    if event.key == pygame.K_UP:
+                    if event.key == pygame.K_UP and self.game_over == False:
                         command = Command.UP
-                elif event.type == event_every_200ms:
+                elif event.type == event_every_200ms and self.game_over == False:
                     command = Command.DOWN
 
             self.update(command)
@@ -60,7 +63,17 @@ class Game:
         self.tetromino.update(command, self)
 
     def spawn_new_tetromino(self):
-        self.tetromino = random.choice([TTetromino(), ITetromino(), OTetromino(), ZTetromino(), STetromino(), JTetromino(), LTetromino()])
+        self.tetromino = random.choice(
+            [
+                TTetromino(),
+                ITetromino(),
+                OTetromino(),
+                ZTetromino(),
+                STetromino(),
+                JTetromino(),
+                LTetromino(),
+            ]
+        )
 
     def check_for_any_full_lines_to_clear(self):
         self.grid.check_for_any_full_lines_to_clear()

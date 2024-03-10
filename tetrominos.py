@@ -23,7 +23,7 @@ class Tetromino:
                             30 - 1,
                         ),
                     )
-    
+
     def update(self, command: Command, game):
         if command == Command.LEFT:
             self.move_left(game)
@@ -36,36 +36,37 @@ class Tetromino:
 
     def move_left(self, game):
         self.col_offset -= 1
-        if(self.out_of_bounds()):
+        if self.out_of_bounds():
             self.col_offset += 1
-        
-        if (self.collides_with_other_tetrominos(game)):
+
+        if self.collides_with_other_tetrominos(game):
             self.col_offset += 1
 
     def move_right(self, game):
         self.col_offset += 1
-        if(self.out_of_bounds()):
+        if self.out_of_bounds():
             self.col_offset -= 1
 
-        if (self.collides_with_other_tetrominos(game)):
+        if self.collides_with_other_tetrominos(game):
             self.col_offset -= 1
 
     def move_down(self, game):
         self.row_offset += 1
-        if(self.out_of_bounds()):
-            self.row_offset -= 1
-            self.lock_tetromino(game)
-            game.spawn_new_tetromino()
-            return
-        
-        if (self.collides_with_other_tetrominos(game)):
+        if self.out_of_bounds():
             self.row_offset -= 1
             self.lock_tetromino(game)
             game.spawn_new_tetromino()
             return
 
-
-    
+        if self.collides_with_other_tetrominos(game):
+            self.row_offset -= 1
+            if self.row_offset <= 0:
+                print("game over")
+                game.game_over = True
+                return
+            self.lock_tetromino(game)
+            game.spawn_new_tetromino()
+            return
 
     def out_of_bounds(self):
         for row_index, row in enumerate(self.blocks[self.state]):
@@ -78,11 +79,11 @@ class Tetromino:
                     ):
                         return True
         return False
-    
+
     def rotate(self):
         self.state = (self.state + 1) % len(self.blocks)
-        if(self.out_of_bounds()):
-            self.state = (self.state - 1 ) % len(self.blocks)
+        if self.out_of_bounds():
+            self.state = (self.state - 1) % len(self.blocks)
 
     def lock_tetromino(self, game):
         """
@@ -91,18 +92,21 @@ class Tetromino:
         for row_index, row in enumerate(self.blocks[self.state]):
             for col_index, block in enumerate(row):
                 if block:
-                    game.grid.blocks[row_index + self.row_offset][col_index + self.col_offset] = self.color
+                    game.grid.blocks[row_index + self.row_offset][
+                        col_index + self.col_offset
+                    ] = self.color
         game.check_for_any_full_lines_to_clear()
-    
+
     def collides_with_other_tetrominos(self, game):
         for row_index, row in enumerate(self.blocks[self.state]):
             for col_index, block in enumerate(row):
                 if block:
                     if row_index + self.row_offset <= 19:
-                        if game.grid.blocks[row_index + self.row_offset][col_index + self.col_offset]:
+                        if game.grid.blocks[row_index + self.row_offset][
+                            col_index + self.col_offset
+                        ]:
                             return True
         return False
-
 
 
 class ZTetromino(Tetromino):
