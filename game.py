@@ -25,13 +25,17 @@ class Game:
         # ui object
 
     def run(self):
+
+        event_every_200ms = pygame.USEREVENT + 1
+        pygame.time.set_timer(event_every_200ms, 200)
+        
         while True:
             command = None
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
-                if event.type == pygame.KEYDOWN:
+                elif event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT:
                         command = Command.LEFT
                     if event.key == pygame.K_RIGHT:
@@ -40,6 +44,8 @@ class Game:
                         command = Command.DOWN
                     if event.key == pygame.K_UP:
                         command = Command.UP
+                elif event.type == event_every_200ms:
+                    command = Command.DOWN
 
             self.update(command)
             self.draw()
