@@ -1,4 +1,5 @@
 import pygame
+from command import Command
 from resources.colors import Colors
 
 
@@ -22,6 +23,44 @@ class Tetromino:
                             30 - 1,
                         ),
                     )
+    
+    def update(self, command: Command):
+        if command == Command.LEFT:
+            self.move_left()
+        if command == Command.RIGHT:
+            self.move_right()
+        if command == Command.DOWN:
+            self.move_down()
+
+    def move_left(self):
+        self.col_offset -= 1
+        if(self.out_of_bounds()):
+            self.col_offset += 1
+
+    def move_right(self):
+        self.col_offset += 1
+        if(self.out_of_bounds()):
+            self.col_offset -= 1
+
+    def move_down(self):
+        self.row_offset += 1
+        if(self.out_of_bounds()):
+            self.row_offset -= 1
+
+    
+
+    def out_of_bounds(self):
+        for row_index, row in enumerate(self.blocks[self.state]):
+            for col_index, block in enumerate(row):
+                if block:
+                    if (
+                        col_index + self.col_offset < 0
+                        or col_index + self.col_offset > 9
+                        or row_index + self.row_offset > 19
+                    ):
+                        return True
+        return False
+
 
 
 class ZTetromino(Tetromino):

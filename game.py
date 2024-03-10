@@ -1,6 +1,16 @@
 import pygame
+from command import Command
 from grid import Grid
-from tetrominos import ITetromino, OTetromino, ZTetromino, TTetromino, STetromino, JTetromino, LTetromino
+from tetrominos import (
+    ITetromino,
+    OTetromino,
+    ZTetromino,
+    TTetromino,
+    STetromino,
+    JTetromino,
+    LTetromino,
+)
+
 
 class Game:
     def __init__(self) -> None:
@@ -11,27 +21,33 @@ class Game:
 
         # game object
         self.grid = Grid()
-        self.tetromino = TTetromino()  
+        self.tetromino = TTetromino()
         # ui object
 
     def run(self):
         while True:
+            command = None
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_LEFT:
-                        print("left")
+                        command = Command.LEFT
                     if event.key == pygame.K_RIGHT:
-                        print("right")
+                        command = Command.RIGHT
                     if event.key == pygame.K_DOWN:
-                        print("down")
+                        command = Command.DOWN
                     if event.key == pygame.K_UP:
                         print("up")
+
+            self.update(command)
             self.draw()
             pygame.display.update()
 
     def draw(self):
         self.grid.draw(self.screen)
         self.tetromino.draw(self.screen)
+
+    def update(self, command):
+        self.tetromino.update(command)
