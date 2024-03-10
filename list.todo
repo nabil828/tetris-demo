@@ -2,9 +2,9 @@
 - 2. Setup the Game Loop @done
 - 3. Creating the Grid @done
 - 4. Create Tetrominoes @done
-- 5. Move Tetrominoes
-    - move left, right, and down
-    - move within the boundaries of the grid
+- 5. Move Tetrominoes @done
+    - move left, right, and down @done
+    - move within the boundaries of the grid @done
 - 6. Rotate Tetrominoes
 - 7. Checking for collisions
     - add velocity by move down continously
