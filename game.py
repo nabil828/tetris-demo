@@ -2,6 +2,7 @@ import random
 import pygame
 from command import Command
 from grid import Grid
+from resources.ui import UI
 from tetrominos import (
     ITetromino,
     OTetromino,
@@ -17,14 +18,16 @@ class Game:
     def __init__(self) -> None:
         pygame.init()
         self.screen = pygame.display.set_mode(
-            (300, 600)
+            (500, 620)
         )  # set the screen size to 300x600 . 20rowsx10columns grid. Each cell is 30x30 pixels
         self.game_over = False
+        self.score = 0
 
-        # game object
+        # game objects
         self.grid = Grid()
-        self.tetromino = TTetromino()
-        # ui object
+        self.tetromino = self.spawn_new_tetromino()
+        self.ui = UI()
+        self.next_tetromino = self.spawn_new_tetromino()
 
     def run(self):
 
@@ -46,6 +49,7 @@ class Game:
                         command = Command.RIGHT
                     if event.key == pygame.K_DOWN and self.game_over == False:
                         command = Command.DOWN
+                        self.update_score(0, 1)
                     if event.key == pygame.K_UP and self.game_over == False:
                         command = Command.UP
                 elif event.type == event_every_200ms and self.game_over == False:
@@ -56,14 +60,15 @@ class Game:
             pygame.display.update()
 
     def draw(self):
-        self.grid.draw(self.screen)
-        self.tetromino.draw(self.screen)
+        self.ui.draw(self.screen, self)
+        self.grid.draw(self.screen, 10, 10)
+        self.tetromino.draw(self.screen, 10, 10)
 
     def update(self, command):
         self.tetromino.update(command, self)
 
     def spawn_new_tetromino(self):
-        self.tetromino = random.choice(
+        return random.choice(
             [
                 TTetromino(),
                 ITetromino(),
@@ -76,4 +81,13 @@ class Game:
         )
 
     def check_for_any_full_lines_to_clear(self):
-        self.grid.check_for_any_full_lines_to_clear()
+        return self.grid.check_for_any_full_lines_to_clear()
+
+    def update_score(self, lined_cleared, move_down_points):
+        self.score += move_down_points
+        if lined_cleared == 1:
+            self.score += 100
+        if lined_cleared == 2:
+            self.score += 300
+        if lined_cleared == 3:
+            self.score += 500

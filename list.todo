@@ -15,7 +15,7 @@
         - if a row is completed, remove the row and move all rows above down by 1 @done
 - 9. Game over @done
     - If the next Tetromino does not fit it's starting position, game over @done
-- 10. Create User Interface
-- 11. Add Score
-    Score increases based on cleared lines (1: +100, 2: +300, 3: +500) and ongoing points per move down.
-- 12. Add Next Block
+- 10. Create User Interface @done
+- 11. Add Score @done
+    - Score increases based on cleared lines (1: +100, 2: +300, 3: +500) and ongoing points per move down. @done 
+- 12. Add Next Block @done

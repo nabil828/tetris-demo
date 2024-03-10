@@ -9,7 +9,7 @@ class Tetromino:
         self.col_offset = 4
         self.row_offset = 0
 
-    def draw(self, screen):
+    def draw(self, screen, ui_x_offset, ui_y_offset):
         for row_index, row in enumerate(self.blocks[self.state]):
             for col_index, block in enumerate(row):
                 if block:
@@ -17,8 +17,8 @@ class Tetromino:
                         screen,
                         self.color,
                         (
-                            (col_index + self.col_offset) * 30,
-                            (row_index + self.row_offset) * 30,
+                            (col_index + self.col_offset) * 30 + ui_x_offset,
+                            (row_index + self.row_offset) * 30 + ui_y_offset,
                             30 - 1,
                             30 - 1,
                         ),
@@ -52,11 +52,6 @@ class Tetromino:
 
     def move_down(self, game):
         self.row_offset += 1
-        if self.out_of_bounds():
-            self.row_offset -= 1
-            self.lock_tetromino(game)
-            game.spawn_new_tetromino()
-            return
 
         if self.collides_with_other_tetrominos(game):
             self.row_offset -= 1
@@ -65,7 +60,15 @@ class Tetromino:
                 game.game_over = True
                 return
             self.lock_tetromino(game)
-            game.spawn_new_tetromino()
+            game.tetromino = game.next_tetromino
+            game.next_tetromino = game.spawn_new_tetromino()
+            return
+
+        if self.out_of_bounds():
+            self.row_offset -= 1
+            self.lock_tetromino(game)
+            game.tetromino = game.next_tetromino
+            game.next_tetromino = game.spawn_new_tetromino()
             return
 
     def out_of_bounds(self):
@@ -95,7 +98,8 @@ class Tetromino:
                     game.grid.blocks[row_index + self.row_offset][
                         col_index + self.col_offset
                     ] = self.color
-        game.check_for_any_full_lines_to_clear()
+        lined_cleared = game.check_for_any_full_lines_to_clear()
+        game.update_score(lined_cleared, 0)
 
     def collides_with_other_tetrominos(self, game):
         for row_index, row in enumerate(self.blocks[self.state]):
