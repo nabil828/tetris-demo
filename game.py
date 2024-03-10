@@ -1,3 +1,4 @@
+import random
 import pygame
 from command import Command
 from grid import Grid
@@ -28,7 +29,7 @@ class Game:
 
         event_every_200ms = pygame.USEREVENT + 1
         pygame.time.set_timer(event_every_200ms, 200)
-        
+
         while True:
             command = None
             for event in pygame.event.get():
@@ -56,4 +57,7 @@ class Game:
         self.tetromino.draw(self.screen)
 
     def update(self, command):
-        self.tetromino.update(command)
+        self.tetromino.update(command, self)
+
+    def spawn_new_tetromino(self):
+        self.tetromino = random.choice([TTetromino(), ITetromino(), OTetromino(), ZTetromino(), STetromino(), JTetromino(), LTetromino()])

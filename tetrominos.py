@@ -24,13 +24,13 @@ class Tetromino:
                         ),
                     )
     
-    def update(self, command: Command):
+    def update(self, command: Command, game):
         if command == Command.LEFT:
             self.move_left()
         if command == Command.RIGHT:
             self.move_right()
         if command == Command.DOWN:
-            self.move_down()
+            self.move_down(game)
         if command == Command.UP:
             self.rotate()
 
@@ -44,10 +44,12 @@ class Tetromino:
         if(self.out_of_bounds()):
             self.col_offset -= 1
 
-    def move_down(self):
+    def move_down(self, game):
         self.row_offset += 1
         if(self.out_of_bounds()):
             self.row_offset -= 1
+            self.lock_tetromino(game)
+            game.spawn_new_tetromino()
 
     
 
@@ -67,6 +69,15 @@ class Tetromino:
         self.state = (self.state + 1) % len(self.blocks)
         if(self.out_of_bounds()):
             self.state = (self.state - 1 ) % len(self.blocks)
+
+    def lock_tetromino(self, game):
+        """
+        Carbon copy the tetromino into the grid
+        """
+        for row_index, row in enumerate(self.blocks[self.state]):
+            for col_index, block in enumerate(row):
+                if block:
+                    game.grid.blocks[row_index + self.row_offset][col_index + self.col_offset] = self.color
 
 
 

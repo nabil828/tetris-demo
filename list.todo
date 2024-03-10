@@ -8,7 +8,7 @@
 - 6. Rotate Tetrominoes @done
 - 7. Checking for collisions
     - add velocity by move down continously @done
-    - lock_tetromino() on reaching the bottom
+    - lock_tetromino() on reaching the bottom @done
     - check for collision with other Tetrominoes. lock if collision, only on moving down.
 - 8. Check for completed rows
     - every time a Tetromino is Locked, check for completed rows
