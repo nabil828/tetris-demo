@@ -1,5 +1,5 @@
 import pygame
-
+from grid import Grid
 
 class Game:
     def __init__(self) -> None:
@@ -7,6 +7,11 @@ class Game:
         self.screen = pygame.display.set_mode(
             (300, 600)
         )  # set the screen size to 300x600 . 20rowsx10columns grid. Each cell is 30x30 pixels
+
+        # game object
+        self.grid = Grid()
+        # tetro object
+        # ui object
 
     def run(self):
         while True:
@@ -27,4 +32,4 @@ class Game:
             pygame.display.update()
 
     def draw(self):
-        pass
+        self.grid.draw(self.screen)
