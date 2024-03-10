@@ -32,6 +32,14 @@ class Grid:
         for row_index, row in enumerate(self.blocks):
             for col_index, block in enumerate(row):
                 pygame.draw.rect(
-                    screen, block, (col_index * 30, row_index * 30, 30-1, 30-1)
+                    screen, block, (col_index * 30, row_index * 30, 30 - 1, 30 - 1)
                 )
-                
+
+    def check_for_any_full_lines_to_clear(self):
+        cleared_lines = 0
+        for row_index, row in enumerate(self.blocks):
+            if all(row):
+                self.blocks.pop(row_index)
+                self.blocks.insert(0, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+                cleared_lines += 1
+        return cleared_lines

@@ -92,6 +92,7 @@ class Tetromino:
             for col_index, block in enumerate(row):
                 if block:
                     game.grid.blocks[row_index + self.row_offset][col_index + self.col_offset] = self.color
+        game.check_for_any_full_lines_to_clear()
     
     def collides_with_other_tetrominos(self, game):
         for row_index, row in enumerate(self.blocks[self.state]):

@@ -61,3 +61,6 @@ class Game:
 
     def spawn_new_tetromino(self):
         self.tetromino = random.choice([TTetromino(), ITetromino(), OTetromino(), ZTetromino(), STetromino(), JTetromino(), LTetromino()])
+
+    def check_for_any_full_lines_to_clear(self):
+        self.grid.check_for_any_full_lines_to_clear()

@@ -10,9 +10,9 @@
     - add velocity by move down continously @done
     - lock_tetromino() on reaching the bottom @done
     - check for collision with other Tetrominoes. lock if collision, only on moving down. @done
-- 8. Check for completed rows
-    - every time a Tetromino is Locked, check for completed rows
-        - if a row is completed, remove the row and move all rows above down by 1
+- 8. Check for completed rows @done
+    - every time a Tetromino is Locked, check for completed rows @done
+        - if a row is completed, remove the row and move all rows above down by 1 @done
 - 9. Game over
     - If the next Tetromino does not fit it's starting position, game over
 - 10. Create User Interface
